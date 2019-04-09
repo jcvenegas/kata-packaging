@@ -104,7 +104,7 @@ arch_to_golang()
 		aarch64) echo "arm64";;
 		ppc64le) echo "$arch";;
 		x86_64) echo "amd64";;
-		s390x) echo "s390x";;
+		s390x|) echo "s390x";;
 		*) die "unsupported architecture: $arch";;
 	esac
 }
