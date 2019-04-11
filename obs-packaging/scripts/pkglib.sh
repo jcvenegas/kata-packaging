@@ -291,18 +291,23 @@ function pkg_version() {
 	local pkg_release="$2"
 	local commit_id="$3"
 	[ -n "${project_version}" ] || die "${FUNCNAME}: need version"
-	[ -n "${pkg_release}" ] || die "${FUNCNAME}: pkg release is needed"
 
 	pkg_version="${project_version}"
 
 	if [ -n "$commit_id" ]; then
-		pkg_version+="+git.${commit_id:0:7}"
+		# see https://github.com/openSUSE/obs-service-tar_scm/blob/master/tar_scm.service.in
+		# %h format
+		#obs short commit length is:
+		obs_short_commit_length=10
+		pkg_version+="+git.${commit_id:0:${obs_short_commit_length}}"
 	fi
-	echo "$pkg_version-${pkg_release}"
+	if [ -n "$pkg_release" ]; then
+		pkg_version+="-${pkg_release}"
+	fi
+	echo "$pkg_version"
 }
 
-function get_obs_pkg_release() {
-	local obs_pkg_name="$1"
+function get_obs_pkg_release() { local obs_pkg_name="$1"
 	local pkg
 	local repo_dir
 	local release=""
