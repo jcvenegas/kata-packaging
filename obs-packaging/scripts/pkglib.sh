@@ -3,7 +3,10 @@
 # This is a helper library for the setup scripts of each package
 # in this repository.
 
-source ../versions.txt
+source_dir_pkg_lib=$(dirname "${BASH_SOURCE[ ${#BASH_SOURCE[@]} - 1 ]}")
+source "${source_dir_pkg_lib}/../../scripts/lib.sh"
+source "${source_dir_pkg_lib}/../versions.txt"
+
 PACKAGING_DIR=/var/packaging
 LOG_DIR=${PACKAGING_DIR}/build_logs
 
